@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Blog Posts
+{% endblock %}
+
+{% block content %}
+
+	<div class="container px-4 py-5">
+
+		<!-- breadcrumb -->
+		<nav aria-label="breadcrumb mb-3">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="{% url 'blog:home' %}">Home</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Posts</li>
+		  </ol>
+		</nav>
+		<!-- end breadcrumb -->
+
+		<div class="row">
+			<div class="col-12 col-lg-4">
+				<h3 class="text-muted mb-1">Search</h3>
+				<div class="sidebar-box pt-md-4 mb-5">
+			        <form action="" class="search-form" method="GET">
+			            <div class="form-group">
+			                <span class="icon icon-search"></span>
+			                <input type="text" name="q" class="form-control" placeholder="Type a keyword and hit enter">
+			            </div>
+			        </form>
+			    </div>
+
+			    <div class="mb-5">
+				    <h3 class="text-muted">Recent Posts</h3>
+				    
+				    {% for post in recent_posts %}
+				    <ul class="list-group">
+						  <li class="list-group-item mb-3 {% cycle 'list-group-item-primary' 'list-group-item-secondary' 'list-group-item-success' 'list-group-item-danger' 'list-group-item-warning' %}">
+						  	<a class="text-deorator-none link-secondary" href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a>
+						  </li>
+					</ul>
+					{% endfor %}	
+
+				</div>
+
+				<div class="mb-3">
+			        <h3 class="text-muted mb-3">Tag Cloud</h3>
+			        <ul class="list-inline">
+			        	{% for tag in all_tags %}
+					    <li class="list-inline-item mb-2"><a href="{% url 'book:view_tags' tag.name %}" class="btn btn-outline-dark">{{ tag.name }}</a></li>
+					    {% endfor %}
+					</ul>
+			    </div>
+
+			</div>
+			<div class="col-12 col-lg-8">
+				<h3 class="text-muted mb-4">Posts</h3>
+
+				{% for post in page_obj %}
+				<div class="card mb-3">
+				    <div class="row g-0">
+				        <div class="col-sm-5">
+				            <a href="{% url 'blog:detail' post.slug %}">
+				            	<img src="{{ post.image.url }}" class="card-img-top h-100" alt="{{ post.title }}">
+				            </a>
+				        </div>
+				        <div class="col-sm-7">
+				            <div class="card-body">
+				            	<h5 class="card-title">
+					            	<a href="{% url 'blog:detail' post.slug %}" class="text-deorator-none link-success">
+						            	{{ post.title }}
+						            </a>
+					            </h5>
+				                <p class="card-text mb-3">{{ post.body |truncatewords:"50" }}</p>
+
+				                <div class="text-center mt-3">
+				                	<a href="{% url 'blog:detail' post.slug %}" class="btn btn-primary">View Posts</a>
+				                </div>
+				            </div>
+				        </div>
+
+				    </div>
+				</div>
+				{% endfor %}
+
+			</div>
+
+			{% if page_obj.has_other_pages %}
+		    <div class="mt-5">
+		    	<nav aria-label="Page navigation example">
+				  <ul class="pagination justify-content-center">
+				    <li class="page-item">
+				    	{% if page_obj.has_previous %}
+				      	<a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+				    	{% endif %}
+				    </li>
+				    <li class="page-item">
+				    	{% if page_obj.has_next %}
+				    	  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+				    	{% endif %}
+				    </li>
+				  </ul>
+				</nav>
+		    </div>
+		    {% endif %}
+		    
+		</div>
+	</div>
+
+{% endblock %}

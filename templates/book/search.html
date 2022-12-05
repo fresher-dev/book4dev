@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Search Results
+{% endblock %}
+
+
+{% block content %}
+	<!-- Card -->
+
+	<div class="container px-4 py-5" id="custom-cards">
+		
+		<div class="row">
+			<!-- show result -->
+			<div class="col-12 col-lg-8">
+				
+				{% if book_results %}
+				<h3 class="text-muted mb-4">Search Result: {{ book_results.count }}</h3>
+					{% for book in book_results %}
+					<div class="card mb-3">
+					    <div class="row g-0">
+					        <div class="col-sm-5">
+					            <img src="{{ book.cover.url }}" class="card-img-top h-100" alt="{{ book.title }}">
+					        </div>
+					        <div class="col-sm-7">
+					            <div class="card-body">
+					                <h5 class="card-title">{{ book.title }}</h5>
+					                <p class="card-text">{{ book.description |truncatewords:"20" }}</p>
+					                <!-- who post this -->
+					                <div class="author d-flex align-items-center">
+		                                <a href="{% url 'book:book_user_profile' book.user.id %}">
+		                                    <img class="img" src="{{ book.user.profile.picture.url }}" alt="iceface" style="height: 50px; border-radius: 25px;">
+		                                </a>
+		                                <div class="info ps-2">
+		                                    <span>Upload by</span>
+		                                    <h3 class="mb-3">
+		                                        <p class="h4 text-muted"><a href="{% url 'book:book_user_profile' book.user.id %}" class="link-secondary">{{ book.user }}</a></p>
+		                                        <p class="h6 text-muted mt-2"><i class="fa-regular fa-calendar"></i>
+		                                        	{{ book.created_date }}
+		                                        </p>
+		                                    </h3>
+		                                </div>
+		                            </div>
+
+					                <div class="text-center">
+					                	<a href="{% url 'book:book_detail' book.slug %}" class="btn btn-primary">View Book</a>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					{% endfor %}
+
+				{% else %}
+					{% if blog_results %}
+					<h3 class="text-muted mb-4">Search Result: {{ blog_results.count }}</h3>
+						{% for post in blog_results %}
+						<div class="card mb-3">
+						    <div class="row g-0">
+						        <div class="col-sm-5">
+						            <img src="{{ post.image.url }}" class="card-img-top h-100" alt="{{ post.title }}">
+						        </div>
+						        <div class="col-sm-7">
+						            <div class="card-body">
+						                <h5 class="card-title">{{ post.title }}</h5>
+						                <p class="card-text">{{ post.body |truncatewords:"20" }}</p>
+						                <!-- who post this -->
+						                <div class="author d-flex align-items-center">
+			                                <a href="{% url 'book:book_user_profile' post.user.id %}">
+			                                    <img class="img" src="{{ post.user.profile.picture.url }}" alt="iceface" style="height: 50px; border-radius: 25px;">
+			                                </a>
+			                                <div class="info ps-2">
+			                                    <span>Upload by</span>
+			                                    <h3 class="mb-3">
+			                                        <p class="h4 text-muted"><a href="{% url 'book:book_user_profile' post.user.id %}" class="link-secondary">{{ post.user }}</a></p>
+			                                        <p class="h6 text-muted mt-2"><i class="fa-regular fa-calendar"></i>
+			                                        	{{ book.created_date }}
+			                                        </p>
+			                                    </h3>
+			                                </div>
+			                            </div>
+
+						                <div class="text-center">
+						                	<a href="{% url 'blog:detail' post.slug %}" class="btn btn-primary">View Post</a>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						{% endfor %}
+					{% else %}
+						<h3>Not Found</h3>
+					{% endif %}
+					
+				{% endif %}
+
+			</div>
+			<!-- end show result -->
+
+			<!-- tag -->
+			{% include 'book/tags.html' %}
+			<!-- end tags -->
+		</div>
+
+	</div>
+
+	<!-- end card -->
+{% endblock %}

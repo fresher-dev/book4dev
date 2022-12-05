@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Blog Home
+{% endblock %}
+
+{% block content %}
+  	<!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+                <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+                {% if request.user.is_authenticated %}
+                <div class="text-center mt-5">
+		        	<a href="{% url 'blog:upload' request.user.id %}" class="btn btn-warning btn-lg px-4 me-md-2">Create a Post.</a>
+		        	<!-- <a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary btn-lg px-4">Login</a> -->
+		        </div>
+                {% else %}
+                <div class="text-center mt-5">
+                    <a href="{% url 'accounts:login' %}" class="btn btn-warning btn-lg px-4 me-md-2">Login</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+	<!-- blog post -->
+
+	<div class="container px-4 py-5" id="custom-cards">
+		
+		<div class="row">
+			<div class="col-12 col-lg-8">
+				<!-- Featured blog post-->
+                <h3 class="text-muted mb-4">Last Post</h3>
+                <div class="card mb-4">
+                    <a href="{% url 'blog:detail' lasts.slug %}"><img class="img-fluid" src="{{ lasts.image.url }}" alt="{{ lasts.title }}" /></a>
+                    <div class="card-body">
+                        <div class="small text-muted">{{ lasts.created_date }}</div>
+                        <h2 class="card-title">
+                            <a class="text-decoration-none link-secondary" href="{% url 'blog:detail' lasts.slug %}">
+                                {{ lasts.title }}
+                            </a>
+                        </h2>
+                        <p class="card-text">{{ lasts.body |truncatewords:"20" }}</p>
+                        <a class="btn btn-primary" href="{% url 'blog:detail' lasts.slug %}">Read more →</a>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                     <h3 class="mb-3">Random Posts</h3>
+                    <hr class="text-center" style="width: 30%; margin: 0 auto;">
+                </div>
+               
+                <!-- more post -->
+                <div class="row g-3">
+                	{% for post in posts %}
+                	<div class="col-12 col-lg-6">
+                		<div class="card mb-4">
+                            <a href="{% url 'blog:detail' post.slug %}"><img class="card-img-top" src="{{ post.image.url }}" alt="{{ post.title }}" /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{ post.created_date }}</div>
+                                <h2 class="card-title h4">
+                                    <a class="text-decoration-none link-secondary" href="{% url 'blog:detail' post.slug %}">
+                                    {{ post.title }}</a>
+                                </h2>
+                                <p class="card-text">{{ post.body |truncatewords:"20"}}</p>
+                                <a class="btn btn-primary" href="{% url 'blog:detail' post.slug %}">Read more →</a>
+                            </div>
+                        </div>
+                	</div>
+                	{% endfor %}
+                </div>
+                <!-- end more post -->
+
+                <!-- more post -->
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                      <a class="page-link" href="{% url 'blog:posts' %}">More Posts<span aria-hidden="true">  &raquo;</span></a>
+                    </li>
+                  </ul>
+                </nav>
+
+			</div>
+			<!-- tags -->
+			{% include 'blog/tags.html' %}
+			<!-- end tags -->
+		</div>
+
+
+	</div>
+
+	<!-- end blog post -->
+{% endblock %}

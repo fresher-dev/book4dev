@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Home
+{% endblock %}
+
+{% block content %}
+
+  	<!-- Hero  -->
+  	<div class="container col-xxl-8 px-4 py-5">
+	    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+	      <div class="col-10 col-sm-8 col-lg-6">
+	        <img src="{% static 'img/cover.jpg' %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+	      </div>
+	      <div class="col-lg-6">
+	        <h1 class="display-5 fw-bold lh-1 mb-3">Book4Developer <span class="h5 text-muted">(free e-books)</span></h1>
+	        <p class="lead">Developer တွေအတွက် အခမဲ့ e-book တွေကို <u>တစ်နေရာတည်းမှာ တစ်စုတစည်းတည်း</u> ရှိအောင်ဆိုပြီး ရည်ရွယ်ထားပါတယ်။ ကိုယ့်မှာ ရှိတဲ့ e-book တွေ upload တင်လို့ရမယ်၊ သူများတွေ တင်ထားတဲ့ e-book တွေကိုလည်း ကိုယ့် ကြိုက်နှက်သက်ရာ ရှာယူ ဒေါင်းလုပ် ဆွဲထားလို့ ရအောင်ဆိုပြီး ရေးသားထားတာပါ။ <u>upload တင်ရန် အကောင့်ဖွင့်ရန် လိုအပ်ပါသည်။</u></p>
+	        <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
+	        	<a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg px-4 me-md-2">Register for Free</a>
+	        	<a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+	        </div>
+	      </div>
+	    </div>
+	</div>
+	<!-- end hero -->
+	<hr>
+
+	<!-- Card -->
+
+	<div class="container px-4 py-5" id="custom-cards">
+		<div class="mb-5">
+	        <h3 class="text-muted mb-3">Tags:</h3>
+	        <ul class="list-inline">
+	        	<!-- {% for item, value in get_tags.items %}
+			    <li class="list-inline-item mb-2"><a href="{% url 'book:view_tags' item %}" class="btn {% cycle 'btn-primary' 'btn-secondary' 'btn-success' 'btn-danger' 'btn-warning' 'btn-info' 'btn-dark' %}">{{ item }}<span class="badge text-bg-secondary">{{ value }}</span></a></li>
+			    {% endfor %} -->
+
+			    {% for item in get_tags %}
+			    <li class="list-inline-item mb-2">
+			    	{% if item.book_set.all.count != 0 %}
+			    		<a href="{% url 'book:view_tags' item.name %}" class="btn {% cycle 'btn-primary' 'btn-secondary' 'btn-success' 'btn-danger' 'btn-warning' 'btn-info' 'btn-dark' %}">{{ item.name }}
+			    			<span class="badge text-bg-secondary">{{ item.book_set.all.count }}</span>
+			    		</a>
+			    	{% endif %}
+			    </li>
+			    {% endfor %}
+			</ul>
+	    </div>	
+
+		<!-- top rating -->
+	    <h2 class="pb-2 border-bottom">Books</h2> 
+
+	    <div class="row content g-5">
+	    	{% for book in books %}	
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="{{ book.cover.url }}" class="w-100 border-bottom" alt="{{ book.title }}">
+				    <div class="card-body">
+				        <h5 class="card-title mb-3">{{ book.title }}</h5>
+				        <p class="card-text">{{ book.description |truncatewords:"5" }}</p>
+				    </div>
+				    <div class="card-body">
+				    	<div class="d-flex justify-content-between">
+				    		<p><a class="link-success" href="{% url 'book:book_user_profile' book.user.id %}">{{ book.user }}</a></p>
+				    		<p><a class="btn btn-outline-primary" href="{% url 'book:book_detail' book.slug %}">View Book</a></p>
+				    	</div>
+				    	
+				    </div>
+				</div>
+	    	</div>
+	    	{% endfor %}
+
+	    	<!-- more post -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end">
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'book:explorer' %}">More Books<span aria-hidden="true">  &raquo;</span></a>
+                </li>
+              </ul>
+            </nav>
+
+	    </div>
+	    <!-- top rating end -->
+
+	    <!-- Blog Posts -->
+	    <h2 class="pb-2 border-bottom mt-5">Blog Posts</h2>
+
+	    <div class="row content g-5">
+	    	{% for post in blogs %}
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="{{ post.image.url }}" class="w-100 border-bottom" alt="{{ post.title }}">
+				    <div class="card-body">
+				        <h5 class="card-title">{{ post.title }}</h5>
+				        <p class="card-text">{{ post.body |truncatewords:"10" }}</p>
+				    </div>
+				    <div class="card-body text-center">
+				        <a class="btn btn-primary" href="{% url 'blog:detail' post.slug %}">Read more →</a>
+				    </div>
+				</div>
+	    	</div>
+	    	{% endfor %}
+
+	    	<!-- more post -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end">
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'blog:posts' %}">More Posts<span aria-hidden="true">  &raquo;</span></a>
+                </li>
+              </ul>
+            </nav>
+
+	    </div>
+	    <!-- blog end -->
+
+	    <!-- you may like -->
+	    <!-- <h2 class="pb-2 border-bottom mt-5">You May Like</h2> -->
+
+	    <!-- div class="row content g-5">
+	    		
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="../photo/1.jpg" class="w-100 border-bottom" alt="...">
+				    <div class="card-body">
+				        <h5 class="card-title">Card title</h5>
+				        <p class="card-text">Here is some example text to make up the card's content. Replace it with your own text anytime.</p>
+				    </div>
+				    <div class="card-body">
+				        <a href="#" class="card-link">Card link</a>
+				        <a href="#" class="card-link">Another link</a>
+				    </div>
+				</div>
+	    	</div>
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="../photo/1.jpg" class="w-100 border-bottom" alt="...">
+				    <div class="card-body">
+				        <h5 class="card-title">Card title</h5>
+				        <p class="card-text">Here is some example text to make up the card's content. Replace it with your own text anytime.</p>
+				    </div>
+				    <div class="card-body">
+				        <a href="#" class="card-link">Card link</a>
+				        <a href="#" class="card-link">Another link</a>
+				    </div>
+				</div>
+	    	</div>
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="../photo/1.jpg" class="w-100 border-bottom" alt="...">
+				    <div class="card-body">
+				        <h5 class="card-title">Card title</h5>
+				        <p class="card-text">Here is some example text to make up the card's content. Replace it with your own text anytime.</p>
+				    </div>
+				    <div class="card-body">
+				        <a href="#" class="card-link">Card link</a>
+				        <a href="#" class="card-link">Another link</a>
+				    </div>
+				</div>
+	    	</div>
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="../photo/1.jpg" class="w-100 border-bottom" alt="...">
+				    <div class="card-body">
+				        <h5 class="card-title">Card title</h5>
+				        <p class="card-text">Here is some example text to make up the card's content. Replace it with your own text anytime.</p>
+				    </div>
+				    <div class="card-body">
+				        <a href="#" class="card-link">Card link</a>
+				        <a href="#" class="card-link">Another link</a>
+				    </div>
+				</div>
+	    	</div>
+	    </div -->
+	    <!-- you may like end -->
+
+	</div>
+{% endblock %}

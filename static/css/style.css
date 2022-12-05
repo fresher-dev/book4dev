@@ -1,0 +1,27 @@
+.avatar {
+  margin-right: 25px;
+  width: 150px;
+  height: 150px;
+}
+.author {
+  font-size: 14px;
+  /*font-weight: 700;*/
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.intro {
+  height: 100%;
+}
+
+
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('https://bootstrapious.com/i/snippets/sn-page-split/bg.jpg');
+  background-size: cover;
+  background-position: center center;
+}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Blog Create A Post Form
+{% endblock %}
+
+{% block content %}
+	<!-- form -->
+
+	<div class="container px-4 py-5" id="custom-cards">
+		
+		<!-- breadcrumb -->
+		<nav aria-label="breadcrumb mb-3">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="{% url 'blog:home' %}">Home</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Create Post</li>
+		  </ol>
+		</nav>
+		<!-- end breadcrumb -->
+
+		<section class="intro">
+		  <div class="mask d-flex align-items-center h-100 gradient-custom">
+		    <div class="container">
+		      <div class="row justify-content-center">
+		        <div class="col-12 col-lg-9 col-xl-7">
+		          <div class="card">
+		            <div class="card-body p-4 p-md-5">
+		              <h3 class="mb-4 pb-2 text-center">Create a blog post.</h3>
+
+		              <form action="" enctype="multipart/form-data" method="POST">
+		              	{% csrf_token %}
+		                <div class="row">
+		                  	
+		                	{{ form.as_p }}
+
+		                  <div class="mt-4 text-center">
+		                    <input class="btn btn-warning btn-lg" type="submit" value="Submit" />
+		                  </div>
+		                </div>
+
+		              </form>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+
+	</div>
+
+	<!-- end form -->
+
+{% endblock %}

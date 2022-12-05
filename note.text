@@ -1,0 +1,42 @@
+account model
+================
+user (one to one)
+description 
+image
+
+
+book
+====================
+title
+autho (book author)
+user (user upload)
+description
+slug
+file
+cover
+link
+tags (mtm)
+created_date(time)
+edited_date = auto_now_add+true
+
+blog
+=================
+static_choice =(
+(0, draf),
+(1, public)
+)
+
+title
+user
+slug
+body
+created
+edit date
+tags
+image
+status (choose)
+
+
+
+
+

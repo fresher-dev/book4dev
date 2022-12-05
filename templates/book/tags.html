@@ -1,0 +1,64 @@
+{% load static %}
+<!-- tag -->
+<div class="col-12 col-lg-4">
+	<h3 class="text-muted mb-1">Tags</h3>
+	<div class="sidebar-box pt-md-4 mb-5">
+        <form action="{% url 'book:search' %}" class="search-form" method="GET">
+            <div class="form-group">
+                <span class="icon icon-search"></span>
+                <input type="text" name="q" class="form-control" placeholder="Type a keyword and hit enter">
+            </div>
+        </form>
+    </div>
+    <!-- <div class="mb-5">
+        <h3 class="text-muted">Categories</h3>
+        <ol class="list-group list-group-numbered">
+        {% for item in get_tags %}
+		  <li class="list-group-item d-flex justify-content-between align-items-start">
+		    <div class="ms-2 me-auto mb-2">
+		      <div class="fw-bold">
+		      	<a href="{% url 'book:view_tags' item.name %}" class="link-secondary">{{ item.name }}</a>
+		      </div>
+		    </div>
+		  </li>
+		{% endfor %}
+		</ol>
+    </div> -->
+
+    <div class="mb-5">
+	    <h3 class="text-muted">Last Book</h3>
+	    {% for book in lastbook %}
+	    <div class="card mb-3" style="max-width: ;">
+		    <div class="row g-0">
+		        <div class="col-sm-5">
+		            <img src="{{ book.cover.url }}" class="card-img-top h-100" alt="{{ book.title }}">
+		        </div>
+		        <div class="col-sm-7">
+		            <div class="card-body">
+		                <h5 class="card-title">{{ book.title }}</h5>
+		                <p class="h6 text-muted"><i class="fa-solid fa-user"></i>
+		                	<a href="{% url 'book:book_user_profile' book.user.id %}" class="link-success">{{ book.user }}</a>
+		                </p>
+		                <p class="h6 text-muted mt-2"><i class="fa-regular fa-calendar"></i>
+                        	{{ book.created_date }}
+                        </p>
+		                <a href="{% url 'book:book_detail' book.slug %}" class="btn btn-primary">View Book</a>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		{% endfor %}
+
+	</div>
+
+    <div class="mb-3">
+        <h3 class="text-muted mb-3">Tag Cloud</h3>
+        <ul class="list-inline">
+        	{% for tag in get_tags %}
+		    <li class="list-inline-item mb-2"><a href="{% url 'book:view_tags' tag.name %}" class="btn btn-outline-dark">{{ tag.name }}</a></li>
+		    {% endfor %}
+		</ul>
+    </div>
+
+</div>
+<!-- end tags -->

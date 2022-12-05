@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Blog Detail
+{% endblock %}
+
+{% block content %}
+
+	<div class="container px-4 py-5" id="custom-cards">
+		<!-- breadcrumb -->
+		<nav aria-label="breadcrumb mb-3">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="{% url 'blog:home' %}">Home</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Library</li>
+		  </ol>
+		</nav>
+		<!-- end breadcrumb -->
+
+		<div class="row py-3">
+			<!-- detail -->
+			<div class="col-12 col-lg-8">
+				<img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}">
+				<h2 class="text-capitalize mt-5">{{ post.title }}</h2>
+				<p><i class="fa-solid fa-user p-3"></i>Posted by: {{ post.user.username }} | <span><i class="fa-regular fa-calendar p-3"></i>{{ post.created_date }}</span></p>
+				<p class="">
+					{{  post.body |safe }}
+				</p>
+
+				<!-- comment here -->
+
+				<div>
+					<!-- comment show here -->
+					<h3 class="mt-5 text-center">Comments {{ comment.loopcount }}</h3>
+					<hr class="mb-5" style="margin: 0 10%;">
+					{% for comment in comments %}
+					<div class="d-flex">
+						
+						{% if comment.user %}
+						<div class="avatar">
+							<img class="img" src="{{ comment.user.profile.picture.url }}" style="max-width: 100%; border-radius: 25px;">
+						</div>
+						{% else %}
+							<div class="avatar">
+								<img class="img" src="{% static 'img/default.png' %}" style="max-width: 100%; border-radius: 25px;">
+							</div>
+						{% endif %}
+						<div class="author p-3">
+							{% if comment.user %}
+								<h5><i class="fa-solid fa-user"></i> {{ comment.user }}</h5>
+							{% else %}
+								<h5><i class="fa-solid fa-user"></i> {{ request.user }}</h5>
+							{% endif %}
+							<span class="text-muted"><i class="fa-regular fa-calendar"></i> {{ comment.created_date }}</span>
+							<p>
+								{{ comment.body }}
+							</p>
+						</div>
+						
+					</div>
+					{% endfor %}
+					<!-- end comment show -->
+
+					<div class="row">
+						
+						<div class="col"></div>
+						<div class="col-12 col-md-8 col-lg-6">
+							<h3 class="mt-5 text-center">Comment Leave Here</h3>
+							<hr>
+							<div class="mb-3 mt-5">
+								<form method="POST">
+									{% csrf_token %}
+
+									<div class="text-center">
+										{% if request.user.is_authenticated %}
+			            					<h3 class="text-muted">{{ request.user }}</h3>
+			            				{% else %}
+			            					<h3 class="text-muted">{{ request.user}}</h3>
+			            				{% endif %}
+									</div>
+
+									{{ form.as_p }}
+
+									<div class="text-center mt-5">
+										<input type="submit" name="" class="btn btn-primary" value="Submit">
+									</div>
+								</form>
+							  
+							</div>
+							
+						</div>
+						<div class="col"></div>
+					</div>				
+
+				</div>
+
+				<!-- end comment  -->
+
+
+			</div>
+			<!-- end detail -->
+
+			<!-- tags -->
+			{% include 'blog/tags.html' %}
+			<!-- end tags -->
+
+		</div>
+
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Explorer
+{% endblock %}
+
+{% block content %}
+
+	<div class="container px-4 py-5" id="custom-cards">
+		<!-- top rating -->
+	    <h2 class="pb-2 border-bottom">Last Order Book</h2>
+
+	    <div class="row g-5">
+	    	{% for book in page_obj %}
+	    	<div class="col-12 col-md-6 col-lg-3">
+	    		<div class="card" style="width: ;">
+				    <img src="{{ book.cover.url }}" class="w-100 border-bottom" alt="{{ book.title }}">
+				    <div class="card-body">
+				        <h5 class="card-title">{{ book.title }}</h5>
+				        <p class="card-text">{{ book.description |truncatewords:"5" }}</p>
+				    </div>
+				    <div class="card-body">
+				        <div class="d-flex justify-content-between">
+				    		<p><a class="link-success" href="{% url 'book:book_user_profile' book.user.id %}">{{ book.user }}</a></p>
+				    		<p><a class="btn btn-outline-primary" href="{% url 'book:book_detail' book.slug %}">View Book</a></p>
+				    	</div>
+				    </div>
+				</div>
+	    	</div>
+	    	{% endfor %}
+	    </div>
+	    <!-- top rating end -->
+	    {% if page_obj.has_other_pages %}
+	    <div class="mt-5">
+	    	<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item">
+			    	{% if page_obj.has_previous %}
+			      	<a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+			    	{% endif %}
+			    </li>
+			    <li class="page-item">
+			    	{% if page_obj.has_next %}
+			    	  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+			    	{% endif %}
+			    </li>
+			  </ul>
+			</nav>
+	    </div>
+	    {% endif %}
+
+	</div>
+
+
+{% endblock %}

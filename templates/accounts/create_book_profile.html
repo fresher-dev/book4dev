@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+	Create User Profile
+{% endblock %}
+
+
+{% block content %}
+	
+	<div class="container px-4 py-5" id="custom-cards">
+		<section class="intro">
+		  <div class="mask d-flex align-items-center h-100 gradient-custom">
+		    <div class="container">
+		      <div class="row justify-content-center">
+		        <div class="col-12 col-lg-9 col-xl-7">
+		          <div class="card">
+		            <div class="card-body p-4 p-md-5">
+		              <h3 class="mb-4 pb-2 text-center">Create a <u>{{ request.user }}</u> Profile</h3>
+
+		              <form action="" enctype="multipart/form-data" method="POST">
+
+		              		{% csrf_token %}
+
+		              		{{ form.as_p }}
+
+		                  <div class="mt-4 text-center">
+		                    <input class="btn btn-warning btn-lg" type="submit" value="Submit" />
+		                  </div>
+		              </form>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+
+	</div>
+
+{% endblock %}
