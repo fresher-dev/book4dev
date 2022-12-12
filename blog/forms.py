@@ -30,3 +30,10 @@ class BlogCommentForm(forms.ModelForm):
 
 		for field in self.fields:
 			self.fields[field].widget.attrs['class'] = "form-control"
+
+
+
+class BlogFormEdit(forms.ModelForm):
+	class Meta:
+		model = Blog
+		fields = "__all__"

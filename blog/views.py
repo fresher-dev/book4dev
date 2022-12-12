@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog, BlogComment
 from tags.models import Tag
-from .forms import BlogForm, BlogCommentForm
+from .forms import BlogForm, BlogCommentForm, BlogFormEdit
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from random import shuffle
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -125,3 +126,49 @@ def blog_posts(request):
 	}
 
 	return render(request, "blog/blog_posts.html", context)
+
+
+@login_required
+def delete_post(request, slug):
+
+	post = get_object_or_404(Blog, slug=slug)
+
+	post.delete()
+
+	return redirect(reverse("book:book_user_profile", args=[request.user.id]))
+
+@login_required
+def edit_post(request, slug):
+	post = get_object_or_404(Blog, slug=slug)
+
+	if request.method == "POST":
+		form = BlogFormEdit(request.POST, request.FILES, instance=post)
+
+		if form.is_valid():
+			newform = form.save(commit=False)
+			newform.user = request.user
+			newform.save()
+			return redirect(reverse("book:book_user_profile", args=[post.user.id]))
+
+	else:
+		form = BlogFormEdit(instance=post)
+
+	context = {
+		"form": form,
+	}
+
+	return render(request, "book/book_upload.html", context)
+
+
+
+
+@login_required
+def check_yes_or_no(request, slug):
+
+	post = get_object_or_404(Blog, slug=slug)
+
+	context = {
+		"post": post,
+	}
+
+	return render(request, "blog/check_yes_or_no.html", context)

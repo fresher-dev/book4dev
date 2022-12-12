@@ -17,7 +17,9 @@ urlpatterns = [
 	path("tag/<str:name>", views.view_tags, name="view_tags"),
 	path("create/<int:pk>/profile", views.book_user_create_profile, name="create_profile"),
 	path("search/", views.search, name="search"),
-
+	path("delete/<slug:slug>", views.delete_book, name="delete"),
+	path("book/edit/<slug:slug>", views.edit_book, name="book_edit"),
+	path("check/<slug:slug>", views.check_yes_or_no, name="check"),
 ]
 
 

@@ -38,7 +38,8 @@
 				
 					<h3 class="mb-3 mt-5">{{ book.title }}</h3>
 					<p class="text-capitalize">Author: {{ book.author }}</p>
-					<p class="text-muted text-capitalize">Upload User: {{ book.user }}</p>
+					<p class="text-muted text-capitalize">Upload User:<a href="{% url 'book:book_user_profile' book.user.id %}" class="link-secondary">
+					{{ book.user }}</a></p>
 					<p class="text-muted">Date: {{ book.created_date }}</p>		
 				</div>
 				<!-- end content -->

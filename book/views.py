@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Book, BookReview
 from .forms import BookForm, BookReviewForm
 from django.contrib.auth.models import User
@@ -10,6 +10,8 @@ from tags.models import Tag
 from blog.models import Blog
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -203,3 +205,46 @@ def search(request):
 	}
 
 	return render(request, "book/search.html", context)
+
+@login_required
+def check_yes_or_no(request, slug):
+
+	book = get_object_or_404(Book, slug=slug)
+
+	context = {
+		"book": book,
+	}
+
+	return render(request, "book/check_yes_or_no.html", context)
+
+
+@login_required
+def delete_book(request, slug):
+
+	book = get_object_or_404(Book, slug=slug)
+
+	book.delete()
+
+	return redirect(reverse("book:book_user_profile", args=[request.user.id]))
+
+@login_required
+def edit_book(request, slug):
+	book = get_object_or_404(Book, slug=slug)
+
+	if request.method == "POST":
+		form = BookForm(request.POST, request.FILES, instance=book)
+
+		if form.is_valid():
+			newform = form.save(commit=False)
+			newform.user = request.user
+			newform.save()
+			return redirect(reverse("book:book_user_profile", args=[book.user.id]))
+
+	else:
+		form = BookForm(instance=book)
+
+	context = {
+		"form": form,
+	}
+
+	return render(request, "book/book_upload.html", context)

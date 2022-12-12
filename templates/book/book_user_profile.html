@@ -43,13 +43,25 @@
 						        <h5 class="card-title mb-2">{{ book.title }}</h5>
 						        <p class="card-text">{{ book.description|truncatewords:"5"}}</p>
 						    </div>
-						    <div class="card-body text-center">
+						    <!-- <div class="card-body text-center">
 						        <a class="btn btn-outline-primary" href="{% url 'book:book_detail' book.slug %}">View Book</a>
+						    </div> -->
+						    <div class="card-body">
+						    	<div class="d-flex justify-content-between">
+						    		{% if request.user.is_authenticated  %}
+						    		<p><a class="link-info" href="{% url 'book:book_edit' book.slug %}">Edit</a></p>
+						    		<p><a class="btn btn-outline-primary" href="{% url 'book:book_detail' book.slug %}">View Book</a></p>
+						    		<p><a class="link-danger" href="{% url 'book:check' book.slug %}">Delete</a></p>
+						    		{% else %}
+						    		<p><a class="btn btn-outline-primary" href="{% url 'book:book_detail' book.slug %}">View Book</a></p>
+						    		{% endif %}
+						    	</div>
+						    	
 						    </div>
 						</div>
   					</div>
   					{% endfor %}
-
+  
   					<!-- blog post -->
   					{% for post in posts %}
   					<div class="col-12 col-md-6 col-lg-3">
@@ -61,8 +73,16 @@
 						        <h5 class="card-title mb-2">{{ post.title }}</h5>
 						        <p class="card-text">{{ post.body|truncatewords:"5"}}</p>
 						    </div>
-						    <div class="card-body text-center">
-						        <a class="btn btn-outline-primary" href="{% url 'blog:detail' post.slug %}">View Blog</a>
+						    <div class="card-body">
+						    	<div class="d-flex justify-content-between">
+						    		{% if request.user.is_authenticated  %}
+						    			<p><a class="link-info" href="{% url 'blog:blog_edit' post.slug %}">Edit</a></p>
+						    			<p><a class="btn btn-outline-secondary" href="{% url 'blog:detail' post.slug %}">View Blog</a></p>
+						    			<p><a class="link-danger" href="{% url 'blog:blog_check' post.slug %}">Delete</a></p>
+						    		{% else %}
+						    			<p><a class="btn btn-outline-secondary" href="{% url 'blog:detail' post.slug %}">View Blog</a></p>
+						    		{% endif %}
+						    	</div>
 						    </div>
 						</div>
   					</div>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Ask
+{% endblock  %}
+
+
+{% block content %}
+	
+	<div class="container vh-75">
+		<div class="row">
+			<div class="col-12 col-lg-12" style="margin: 30% auto;">
+				<div class="text-center">
+					<h1 class="mb-5">Are you sure?</h1>
+						<a class="btn btn-danger me-3" href="{% url 'book:delete' book.slug %}">Yes</a>
+						<a class="btn btn-info me-3" href="{% url 'book:book_user_profile' book.user.id %}">No</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
