@@ -92,7 +92,7 @@
 				    <img src="{{ post.image.url }}" class="w-100 border-bottom" alt="{{ post.title }}">
 				    <div class="card-body">
 				        <h5 class="card-title">{{ post.title }}</h5>
-				        <p class="card-text">{{ post.body |truncatewords:"10" }}</p>
+				        <p class="card-text">{{ post.body |truncatewords:"10" |safe }}</p>
 				    </div>
 				    <div class="card-body text-center">
 				        <a class="btn btn-primary" href="{% url 'blog:detail' post.slug %}">Read more →</a>

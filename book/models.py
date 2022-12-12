@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from tags.models import Tag
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 

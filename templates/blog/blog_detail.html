@@ -20,7 +20,12 @@
 			<!-- detail -->
 			<div class="col-12 col-lg-8">
 				<img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}">
-				<h2 class="text-capitalize mt-5">{{ post.title }}</h2>
+				<ul class="list-inline">
+					<li class="list-inline-item"><h2 class="text-capitalize mt-5">{{ post.title }}</h2></li>
+					{% for tag in post.tags.all %}
+				    	<li class="list-inline-item text-muted"><a href="{% url 'book:view_tags' tag %}" class="btn {% cycle 'btn-outline-primary' 'btn-outline-secondary' 'btn-outline-success' 'btn-outline-danger' 'btn-outline-warning' 'btn-outline-info' 'btn-outline-dark' %}">{{ tag }}</a></li>
+				    {% endfor %}
+				</ul>
 				<p><i class="fa-solid fa-user p-3"></i>Posted by: {{ post.user.username }} | <span><i class="fa-regular fa-calendar p-3"></i>{{ post.created_date }}</span></p>
 				<p class="">
 					{{  post.body |safe }}

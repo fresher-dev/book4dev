@@ -1,4 +1,4 @@
-#!C:\Users\MNN-068\OneDrive\Desktop\Linux\Book4Devs\env\Scripts\python.exe
+#!C:\Users\MNN-068\OneDrive\Desktop\Linux\django\book4dev\env\Scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

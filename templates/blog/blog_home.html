@@ -42,7 +42,7 @@
                                 {{ lasts.title }}
                             </a>
                         </h2>
-                        <p class="card-text">{{ lasts.body |truncatewords:"20" }}</p>
+                        <p class="card-text">{{ lasts.body |truncatewords:"20" | safe }}</p>
                         <a class="btn btn-primary" href="{% url 'blog:detail' lasts.slug %}">Read more →</a>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                     <a class="text-decoration-none link-secondary" href="{% url 'blog:detail' post.slug %}">
                                     {{ post.title }}</a>
                                 </h2>
-                                <p class="card-text">{{ post.body |truncatewords:"20"}}</p>
+                                <p class="card-text">{{ post.body |truncatewords:"20" | safe}}</p>
                                 <a class="btn btn-primary" href="{% url 'blog:detail' post.slug %}">Read more →</a>
                             </div>
                         </div>

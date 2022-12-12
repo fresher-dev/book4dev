@@ -64,7 +64,7 @@
 				        <div class="col-sm-7">
 				            <div class="card-body">
 				                <h5 class="card-title">{{ post.title }}</h5>
-				                <p class="card-text mb-3b">{{ post.body |truncatewords:"10" }}</p>
+				                <p class="card-text mb-3b">{{ post.body |truncatewords:"5" |safe }}</p>
 				                <!-- who post this -->
 				                <div class="author d-flex align-items-center">
 	                                <a href="{% url 'book:book_user_profile' post.user.id %}">
