@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     # 3rt party editor
     'ckeditor',
     'ckeditor_uploader',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 # editor
