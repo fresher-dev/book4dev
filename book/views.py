@@ -11,6 +11,8 @@ from blog.models import Blog
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 
@@ -248,3 +250,19 @@ def edit_book(request, slug):
 	}
 
 	return render(request, "book/book_upload.html", context)
+
+
+def content_mail(request):
+
+	if request.method == "POST": 
+		username = request.POST['username']
+		email = request.POST['email']
+		messages = request.POST['messages']
+
+		subject = "Welcome to Book4Dev Django Web Mail Services"
+		message = f"\nYour messages\n--------------------------\n{messages}\n--------------------------\n\nHi {username}, thank you for your attention."
+		email_form = settings.EMAIL_HOST_USER
+		receipient_list = [email]
+		send_mail(subject, message, email_form, receipient_list)
+		return redirect("book:home")
+	return render(request, 'book/content_form.html')

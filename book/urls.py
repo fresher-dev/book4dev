@@ -20,6 +20,7 @@ urlpatterns = [
 	path("delete/<slug:slug>", views.delete_book, name="delete"),
 	path("book/edit/<slug:slug>", views.edit_book, name="book_edit"),
 	path("check/<slug:slug>", views.check_yes_or_no, name="check"),
+	path("content/", views.content_mail, name="content"),
 ]
 
 
