@@ -3,10 +3,16 @@ from .models import Blog, BlogComment
 
 
 class BlogAdmin(admin.ModelAdmin):
-	prepopulated_fields = {
-		"slug": ["title", ]
-	}
+    """
+    BlogAdmin Model Adim
+    ->create auto slug with title
+    """
 
+    prepopulated_fields = {
+        "slug": [
+            "title",
+        ]
+    }
 
 
 admin.site.register(Blog, BlogAdmin)

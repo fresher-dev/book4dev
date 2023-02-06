@@ -5,46 +5,60 @@ from tags.models import Tag
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
-
 class Book(models.Model):
-	title = models.CharField(max_length=200)
-	author = models.CharField(max_length=100, null=True, blank=True)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	description = models.TextField(null=True, blank=True)
-	slug = models.SlugField()
-	file = models.FileField(upload_to="books", null=True, blank=True)
-	cover = models.ImageField(upload_to="images", default="img/book.jpg")
-	link = models.CharField(max_length=2084, null=True, blank=True)
-	tags = models.ManyToManyField(Tag, blank=True)
-	created_date = models.DateTimeField(default=timezone.now)
-	edited_date = models.DateTimeField(auto_now_add=True)
+    """
+    Book Model
+    -> title
+    -> author (book owner)
+    -> user (book upload user)
+    -> description (book detail)
+    -> slug (auto create with title)
+    -> file (book pdf)
+    -> cover (book image)
+    -> link (book link)
+    -> tags (book tags)
+    -> created_date
+    -> edited_date
+    """
 
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.TextField(null=True, blank=True)
+    slug = models.SlugField()
+    file = models.FileField(upload_to="books", null=True, blank=True)
+    cover = models.ImageField(upload_to="images", default="img/book.jpg")
+    link = models.CharField(max_length=2084, null=True, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    edited_date = models.DateTimeField(auto_now_add=True)
 
-	def __str__(self):
-		return self.title
-	
+    def __str__(self):
+        return self.title
 
 
 class BookReview(models.Model):
-	CHOICE_STARS = (
-		(1, 1), 
-		(2, 2),
-		(3, 3),
-		(4, 4),
-		(5, 5)
-	)
+    """
+    Book Review Model
+    -> user account
+    -> stars (5 stars)
+    -> body (message)
+    -> book (book in review)
+    -> created_date
+    """
 
-	user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-	stars = models.IntegerField(choices=CHOICE_STARS, default=5)
-	body = models.TextField(blank=True, null=True)
-	book = models.ForeignKey(Book, on_delete=models.CASCADE)
-	created_date = models.DateTimeField(default=timezone.now)
+    CHOICE_STARS = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    stars = models.IntegerField(choices=CHOICE_STARS, default=5)
+    body = models.TextField(blank=True, null=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(default=timezone.now)
 
-	def __str__(self):
+    def __str__(self):
 
-		if self.user is None:
-			user = "AnonymousUser"
-		else:
-			user = self.user	
-		return "{} books ({}) stars by {}.".format(self.book.title, self.stars, user)
+        if self.user is None:
+            user = "AnonymousUser"
+        else:
+            user = self.user
+        return "{} books ({}) stars by {}.".format(self.book.title, self.stars, user)
