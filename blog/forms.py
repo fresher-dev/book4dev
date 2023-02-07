@@ -27,12 +27,12 @@ class BlogForm(forms.ModelForm):
 
 
 class BlogCommentForm(forms.ModelForm):
-	"""
-	BlogCommentForm model Form
-	fileds:
-		-> email
-		-> body
-	"""
+
+    # BlogCommentForm model Form
+    # fileds:
+    #   -> email
+    #   -> body
+
     class Meta:
         model = BlogComment
         fields = ["email", "body"]
@@ -45,11 +45,11 @@ class BlogCommentForm(forms.ModelForm):
 
 
 class BlogFormEdit(forms.ModelForm):
-	"""
-	BlogFormEdit model Form
-	fields:
-		-> all
-	"""
+
+    # BlogFormEdit model Form
+    # fields:
+    #   -> all
+
     class Meta:
         model = Blog
         fields = "__all__"

@@ -206,11 +206,10 @@ def book_user_create_profile(request, pk):
 
 
 def view_tags(request, name):
-	"""
-	Book and Blog tags
-	-> show all book tags
-	-> show all blog tags
-	"""
+    # Book and Blog tags
+    # -> show all book tags
+    # -> show all blog tags
+
     tag = Tag.objects.get(name=name)
     books = tag.book_set.all()
     posts = tag.blog_set.all()
@@ -227,10 +226,10 @@ def view_tags(request, name):
 
 
 def search(request):
-	"""
-	Search Function
-	-> search all blog and book with title
-	"""
+
+    # Search Function
+    # -> search all blog and book with title
+
     if request.method == "GET":
         queryset = request.GET.get("q")
 
@@ -250,9 +249,9 @@ def search(request):
 
 @login_required
 def check_yes_or_no(request, slug):
-	"""
-	Book user checking page
-	"""
+
+    # Book user checking page
+
     book = get_object_or_404(Book, slug=slug)
 
     context = {
@@ -264,10 +263,10 @@ def check_yes_or_no(request, slug):
 
 @login_required
 def delete_book(request, slug):
-	"""
-	Delete book
-	-> delet book
-	"""
+
+    # Delete book
+    # -> delet book
+
     book = get_object_or_404(Book, slug=slug)
 
     book.delete()
@@ -277,10 +276,10 @@ def delete_book(request, slug):
 
 @login_required
 def edit_book(request, slug):
-	"""
-	Update book
-	-> book update with BookFrom class
-	"""
+
+    # Update book
+    # -> book update with BookFrom class
+
     book = get_object_or_404(Book, slug=slug)
 
     if request.method == "POST":
@@ -303,10 +302,9 @@ def edit_book(request, slug):
 
 
 def content_mail(request):
-	"""
-	User conent email
-	-> send mail to user by django admin account
-	"""
+
+    # User conent email
+    # -> send mail to user by django admin account
 
     if request.method == "POST":
         username = request.POST["username"]
