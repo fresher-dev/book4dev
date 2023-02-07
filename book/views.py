@@ -307,7 +307,11 @@ def content_mail(request):
     # -> send mail to user by django admin account
 
     if request.method == "POST":
-        username = request.POST["username"]
+        try:
+            if request.user.is_authenticated:
+                username = request.user.username
+        except:
+            username = request.POST["username"]
         email = request.POST["email"]
         messages = request.POST["messages"]
 
