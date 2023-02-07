@@ -5,3 +5,4 @@ pycparser==2.21
 pytz==2022.4
 sqlparse==0.4.3
 django-ckeditor==6.5.1
+django-allauth

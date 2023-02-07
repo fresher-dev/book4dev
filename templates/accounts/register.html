@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 {% block title %}
 	Register
 {% endblock %}
@@ -39,6 +40,11 @@
 	                                    <label for="customCheck1" class="custom-control-label">Remember password</label>
 	                                </div>
 	                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Register</button>
+	                                <hr>
+	                                <div class="text-center mt-2 mb-2">
+	                                	<a class="btn btn-primary btn-block" href="{% provider_login_url 'google' %}">Login with Google</a>
+	                                </div>
+	                                <hr>
 	                                <div class="text-center d-flex justify-content-between mt-4"><p>Have account? <a href="{% url 'accounts:login' %}" class="font-italic text-muted"> 
 	                                        <u>Login</u></a></p></div>
 	                            </form>

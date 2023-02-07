@@ -18,10 +18,11 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("", include("book.urls")),
     path("accounts/", include("accounts.urls")),
     path("blog/", include("blog.urls")),
-    path("ckeditor/", include('ckeditor_uploader.urls')),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
     path("api/", include("api.urls")),
+    path("accounts/", include("allauth.urls")),
 ]
